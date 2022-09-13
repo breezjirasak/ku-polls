@@ -5,6 +5,7 @@ from django.http import Http404
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 
 from .models import Question, Choice
 
@@ -29,6 +30,14 @@ class DetailView(generic.DetailView):
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+    
+    def get(self, request, pk):
+        self.question = Question.objects.get(pk=pk)
+        if self.question.can_vote():
+            return render(request, 'polls/detail.html', {'question': self.question})
+        else:
+            messages.error(request, "Voting is not allowed.")
+            return HttpResponseRedirect(reverse('polls:index'))
 
 
 class ResultsView(generic.DetailView):
