@@ -1,4 +1,5 @@
 import datetime
+from re import S
 
 from django.test import TestCase
 from django.utils import timezone
@@ -113,7 +114,7 @@ class QuestionDetailViewTests(TestCase):
         future_question = create_question(question_text='Future question.', days=5)
         url = reverse('polls:detail', args=(future_question.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_past_question(self):
         """
@@ -124,3 +125,40 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+        
+class QuestionDateTest(TestCase):
+    
+    def test_pub_date_that_in_the_future(self):
+        """ 
+        Visitor can not vote if the publish date is in the future.
+        """
+        pub_date_time = timezone.localtime() + datetime.timedelta(days=1)
+        question = Question(pub_date=pub_date_time)
+        self.assertFalse(question.can_vote())
+        
+    def test_current_date_is_between_pub_date_and_end_date(self):
+        """
+        Current date/time is exactly the pub_date or exactly the end_date (voting allowed)
+        """
+        pub_date_time = timezone.localtime()
+        end_date_time = timezone.localtime() + datetime.timedelta(days=1)
+        question = Question(pub_date=pub_date_time, end_date=end_date_time)
+        self.assertTrue(question.can_vote())
+
+    def test_current_time_after_end_date(self):
+        """
+        Current date/time is after end_date (vote is not allowed)
+        """
+        pub_date_time = timezone.localtime() 
+        end_date_time = timezone.localtime() - datetime.timedelta(days=1)
+        question = Question(pub_date=pub_date_time, end_date=end_date_time)
+        self.assertFalse(question.can_vote())
+        
+    def test_no_end_date(self):
+        """ 
+        The question has no end date.
+        """
+        pub_date_time = timezone.localtime() 
+        question = Question(pub_date=pub_date_time)
+        self.assertIsNone(question.end_date)
+        self.assertTrue(question.can_vote())
