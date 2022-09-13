@@ -10,17 +10,29 @@ class Question(models.Model):
     end_date = models.DateTimeField('ended date', null=True, blank=True)
     
     def __str__(self):
+        """ 
+        display question text.
+        """
         return self.question_text
     
     def was_published_recently(self):
+        """
+        To check that polls was published recently. 
+        """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
     
     def is_published(self):
+        """ 
+        Return true if you current time is on published date
+        """
         now = timezone.localtime()
         return now >= self.pub_date
     
     def can_vote(self):
+        """ 
+        Return true if you current time is between publish date and ended date.
+        """
         now = timezone.localtime()
         if self.end_date is None:
             return now >= self.pub_date
@@ -33,4 +45,7 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
     
     def __str__(self):
+        """ 
+        display choices.
+        """
         return self.choice_text
