@@ -60,6 +60,9 @@ def vote(request, question_id):
     if not user.is_authenticated:
        return redirect('login')
    
+    print("current user is", user.id, "login", user.username)
+    print("Real name:", user.first_name, user.last_name)
+   
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
