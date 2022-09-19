@@ -1,3 +1,4 @@
+from secrets import choice
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
@@ -9,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Question, Choice
+from .models import Question, Choice, Vote
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -73,8 +74,12 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        try:
+            vote_ = Vote.objects.get(user=user, choice__question=selected_choice.question)
+        except Vote.DoesNotExist:
+            vote_ = Vote.objects.create(user=user, choice=selected_choice) 
+        vote_.choice = selected_choice
+        vote_.save()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
