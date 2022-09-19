@@ -7,6 +7,7 @@
   {{ form.as_table }}
   </table>
   <button type="submit">Login</button>
+  <a href="{% url 'signup'%}"><button type="button">Signup</button></a>
   <!-- if your app redirects user to login before accessing some pages, then next contains return url -->
   <input type="hidden" name="next" value="{{next}}" />
 </form>
@@ -16,3 +17,7 @@
 </p>
 </body>
 </html>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
