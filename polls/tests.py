@@ -4,8 +4,8 @@ from re import S
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
-
-from .models import Question
+from django.contrib.auth.models import User
+from .models import Choice, Question
 
 
 class QuestionModelTests(TestCase):
@@ -162,3 +162,22 @@ class QuestionDateTest(TestCase):
         question = Question(pub_date=pub_date_time)
         self.assertIsNone(question.end_date)
         self.assertTrue(question.can_vote())
+        
+class UserTest(TestCase):
+    """ To test user in case of login"""
+    def setUp(self) -> None:
+        """ To set attribute"""
+        super().setUp()
+        self.login_url = reverse('login')
+        self.user = User.objects.create_user(username='test', password='test123')
+        self.user.save()
+        
+    def test_login_success(self):
+        """ To test username and password is correct"""
+        response = self.client.post(self.login_url, {'username': 'test', 'password':'test123'})
+        self.assertEqual(302, response.status_code)
+    
+    def test_login_fail(self):
+        """ To test username and password is incorrect"""
+        response = self.client.post(self.login_url, {'username': 'hello', 'password':'1234565'})
+        self.assertEqual(200, response.status_code)
