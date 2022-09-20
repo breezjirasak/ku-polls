@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Question(models.Model):
+    """ Question model"""
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     end_date = models.DateTimeField('ended date', null=True, blank=True)
@@ -42,6 +43,7 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
+    """ Choice model"""
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     # votes = models.IntegerField(default=0)
@@ -57,5 +59,6 @@ class Choice(models.Model):
         return self.choice_text
     
 class Vote(models.Model):
+    """ Vote model"""
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)

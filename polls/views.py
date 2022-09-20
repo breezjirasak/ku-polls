@@ -42,11 +42,14 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         """
         user = request.user
         self.question = Question.objects.get(pk=pk)
+        
+        # To get exixting vote to display radio bullet.
         try:
             self.vote = Vote.objects.get(user=user, choice__question=self.question)
         except Vote.DoesNotExist:
             self.vote = None
-            
+        
+        # check that you can vote or not. (on date)
         if self.question.can_vote():
             return render(request, 'polls/detail.html', {'question': self.question, 'votes': self.vote})
         else:
