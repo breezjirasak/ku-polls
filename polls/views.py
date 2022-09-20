@@ -1,3 +1,4 @@
+from re import S
 from secrets import choice
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -9,6 +10,7 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 from .models import Question, Choice, Vote
 
@@ -38,12 +40,20 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         """
         Show error message and return to index page if voting is not allowed.
         """
+        user = request.user
         self.question = Question.objects.get(pk=pk)
+        try:
+            self.vote = Vote.objects.get(user=user, choice__question=self.question)
+        except Vote.DoesNotExist:
+            self.vote = None
+            
         if self.question.can_vote():
-            return render(request, 'polls/detail.html', {'question': self.question})
+            return render(request, 'polls/detail.html', {'question': self.question, 'votes': self.vote})
         else:
             messages.error(request, "Voting is not allowed.")
             return HttpResponseRedirect(reverse('polls:index'))
+        
+        
 
 
 class ResultsView(generic.DetailView):
