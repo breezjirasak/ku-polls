@@ -9,7 +9,45 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## Install and Run
 
-to be added.
+1. Clone this repo
+
+```
+git clone https://github.com/breezjirasak/ku-polls.git
+```
+
+2. Install django
+
+```
+pip3 install Django
+```
+
+3. Add .env file
+
+```
+# The Django Secret Key.
+SECRET_KEY = key
+
+# Default is False
+DEBUG = bool
+
+# Your time zone
+TIME_ZONE = timezone
+```
+
+4. Runserver to see app.
+
+```
+python3 manage.py runserver
+```
+
+5. You can use username and password below or you can register a new account.
+
+## Demo user
+
+| Username  | Password  |
+|-----------|-----------|
+|   test1   | test123456 |
+|   test2   | test123456 |
 
 ## Project Documents
 
