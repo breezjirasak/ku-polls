@@ -21,32 +21,21 @@ git clone https://github.com/breezjirasak/ku-polls.git
 cd ku-polls
 ```
 
-3. Install django
+3. Creating a virtual env and installing dependencies.
 
 ```
-pip3 install Django
+python -m venv env           # create the virtual env in "env/", only 1 time
+. env/bin/activate           # start the virtual env in bash or zsh
+pip install -r requirements.txt
 ```
 
-4. Add .env file
-
-```
-# The Django Secret Key.
-SECRET_KEY = key
-
-# Default is False
-DEBUG = bool
-
-# Your time zone
-TIME_ZONE = timezone
-```
-
-5. Runserver to see app.
+4. Runserver to see app.
 
 ```
 python3 manage.py runserver
 ```
 
-6. You can use username and password below or you can register a new account.
+5. You can use username and password below or you can register a new account.
 
 ## Demo user
 
