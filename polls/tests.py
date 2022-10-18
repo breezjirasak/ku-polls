@@ -161,14 +161,14 @@ class QuestionDateTest(TestCase):
         self.assertIsNone(question.end_date)
         self.assertTrue(question.can_vote())
         
-# class UserTest(TestCase):
-#     """ To test user in case of login"""
-#     def setUp(self) -> None:
-#         """ To set attribute"""
-#         super().setUp()
-#         self.login_url = reverse('login')
-#         self.user = User.objects.create_user(username='test', password='test123')
-#         self.user.save()
+class UserTest(TestCase):
+    """ To test user in case of login"""
+    def setUp(self) -> None:
+        """ To set attribute"""
+        super().setUp()
+        self.login_url = reverse('login')
+        self.user = User.objects.create_user(username='test', password='test123')
+        self.user.save()
         
 #     def test_login_success(self):
 #         """ To test username and password is correct"""
