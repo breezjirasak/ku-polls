@@ -4,6 +4,7 @@ cover_pylib = False
 omit =
     __init__.py
     /usr/*
+    manage.py
     mysite/*
     polls/migrations/*
     polls/__init__.py
