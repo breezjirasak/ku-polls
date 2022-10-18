@@ -1,9 +1,8 @@
 [run]
 branch = True
+cover_pylib = False
 omit =
     /usr/*
-    polls/tests.py
-    manage.py
     */__init__.py
     mysite/*
     polls/migrations/*
