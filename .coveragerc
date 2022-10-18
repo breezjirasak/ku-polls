@@ -3,11 +3,13 @@ branch = True
 cover_pylib = False
 omit =
     /usr/*
-    __init__.py
+    polls/tests.py
+    manage.py
+    */__init__.py
     mysite/*
     polls/migrations/*
     
-# [report]
-# exclude_lines =
-#     def __str__
-#     def __repr__
+[report]
+exclude_lines =
+    def __str__
+    def __repr__
