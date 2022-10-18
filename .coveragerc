@@ -1,6 +1,5 @@
 [run]
 branch = True
-cover_pylib = False
 omit =
     /usr/*
     polls/tests.py
