@@ -5,7 +5,8 @@ omit =
     __init__.py
     /usr/*
     mysite/*
-    */migrations/*
+    polls/migrations/*
+    polls/__init__.py
 include =
     polls/*
     
