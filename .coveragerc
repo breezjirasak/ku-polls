@@ -3,10 +3,8 @@ branch = True
 cover_pylib = False
 omit =
     __init__.py
-    manage.py
     mysite/*
     polls/migrations/*
-    polls/__init__.py
     
 [report]
 exclude_lines =
