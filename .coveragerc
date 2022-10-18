@@ -1,0 +1,15 @@
+[run]
+branch = True
+cover_pylib = False
+omit =
+    __init__.py
+    /usr/*
+    mysite/*
+    */migrations/*
+include =
+    polls/*
+    
+[report]
+exclude_lines =
+    def __str__
+    def __repr__
