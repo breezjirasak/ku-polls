@@ -1,5 +1,7 @@
 ## Online Polls And Surveys
 
+[![Python application](https://github.com/breezjirasak/ku-polls/actions/workflows/python-app.yml/badge.svg)](https://github.com/breezjirasak/ku-polls/actions/workflows/python-app.yml)
+
 An application for conducting online polls and surveys based
 on the [Django Tutorial project](https://docs.djangoproject.com/en/4.1/intro/tutorial01/), with
 additional features.
